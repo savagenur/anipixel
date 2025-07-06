@@ -1,0 +1,127 @@
+@import "tailwindcss";
+/* ✅ Custom theme variants */
+@custom-variant light (&:where([data-theme=light], [data-theme=light] *));
+@custom-variant dark (&:where([data-theme=dark], [data-theme=dark] *));
+@custom-variant coffee (&:where([data-theme=coffee], [data-theme=coffee] *));
+
+/* 🌑 Base Theme — Default = Dark */
+@theme {
+  --breakpoint-xs: 30rem;
+  --color-background: hsl(213, 41%, 14%);
+  --color-foreground: hsl(0 0% 98%);
+  --color-primary: hsl(220 90% 70%);
+  --color-secondary: hsl(270 60% 75%);
+  --color-muted: hsl(222 15% 18%);
+  --color-border: hsl(222 10% 30%);
+  /* Custom */
+  --color-textColor2: hsl(212, 24%, 70%);
+  /* #adc0d2 */
+  --color-textTitle: hsl(209, 29%, 75%);
+  --color-textColor3: hsl(212, 19%, 68%);
+  /* #8ba0b2 */
+  --color-textColor4: hsl(208, 20%, 62%);
+
+  --color-page: hsl(215, 26%, 9%);
+}
+
+/* 🌞 Light & 🟪 coffee Overrides */
+@layer theme {
+  * {
+    @variant light {
+      --color-background: hsl(0 0% 100%);
+      /* --color-foreground: hsl(0 0% 10%); */
+      --color-foreground: hsl(208, 32%, 84%);
+      --color-primary: hsl(220 90% 55%);
+      --color-secondary: hsl(270 60% 65%);
+      --color-muted: hsl(0 0% 94%);
+      --color-border: hsl(0 0% 80%);
+      --color-page: hsl(0, 0%, 100%);
+    }
+
+    @variant coffee {
+      --color-background: hsl(222 45% 14%);
+      --color-foreground: hsl(0 0% 100%);
+      --color-primary: hsl(246 100% 70%);
+      --color-secondary: hsl(200 100% 60%);
+      --color-muted: hsl(222 35% 20%);
+      --color-border: hsl(222 20% 35%);
+    }
+  }
+}
+
+@utility main-padding {
+  @apply px-4 sm:px-[2vw] md:px-[3vw] lg:px-[8vw] xl:px-[10vw];
+}
+
+body {
+  background-color: var(--color-page);
+}
+/* 
+:root {
+  font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
+  line-height: 1.5;
+  font-weight: 400;
+
+  color-scheme: light dark;
+  color: rgba(255, 255, 255, 0.87);
+  background-color: var(--color-page);
+
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+a {
+  font-weight: 500;
+  color: #646cff;
+  text-decoration: inherit;
+}
+a:hover {
+  color: #535bf2;
+}
+
+body {
+  margin: 0;
+  display: flex;
+  place-items: center;
+  min-width: 320px;
+  min-height: 100vh;
+}
+
+h1 {
+  font-size: 3.2em;
+  line-height: 1.1;
+}
+
+button {
+  border-radius: 8px;
+  border: 1px solid transparent;
+  padding: 0.6em 1.2em;
+  font-size: 1em;
+  font-weight: 500;
+  font-family: inherit;
+  background-color: #1a1a1a;
+  cursor: pointer;
+  transition: border-color 0.25s;
+}
+button:hover {
+  border-color: #646cff;
+}
+button:focus,
+button:focus-visible {
+  outline: 4px auto -webkit-focus-ring-color;
+}
+
+@media (prefers-color-scheme: light) {
+  :root {
+    color: #213547;
+    background-color: #ffffff;
+  }
+  a:hover {
+    color: #747bff;
+  }
+  button {
+    background-color: #f9f9f9;
+  }
+} */
