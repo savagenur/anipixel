@@ -1,8 +1,10 @@
 import React from "react";
+import { useNavigate } from "react-router-dom";
 
 const AnimeCard = () => {
+  const navigate = useNavigate();
   return (
-    <div className="group cursor-pointer">
+    <div onClick={() => navigate("/anime/asd")} className="group cursor-pointer">
       <img
         className="aspect-[.7] rounded object-cover"
         src={

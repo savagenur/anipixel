@@ -1,6 +1,6 @@
 import React from 'react'
 import FilterTile from './FilterTile'
-import { FilterIcon, LucideArrowDown, Search, X } from 'lucide-react'
+import { FilterIcon, ChevronDown , Search, X } from 'lucide-react'
 import Button from './Button'
 
 const SearchFilter = () => {
@@ -11,22 +11,22 @@ const SearchFilter = () => {
           <FilterTile
             title={"Genres"}
             placeholder={"Any"}
-            Suffix={LucideArrowDown}
+            Suffix={ChevronDown }
           />
           <FilterTile
             title={"Year"}
             placeholder={"Any"}
-            Suffix={LucideArrowDown}
+            Suffix={ChevronDown }
           />
           <FilterTile
             title={"Season"}
             placeholder={"Any"}
-            Suffix={LucideArrowDown}
+            Suffix={ChevronDown }
           />
           <FilterTile
             title={"Format"}
             placeholder={"Any"}
-            Suffix={LucideArrowDown}
+            Suffix={ChevronDown }
           />
         </div>
         <Button

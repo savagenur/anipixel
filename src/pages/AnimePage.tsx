@@ -5,11 +5,13 @@ import MainTitle from "../components/MainTitle";
 import AnimeCard from "../components/AnimeCard";
 import SearchFilter from "../components/SearchFilter";
 import { twx } from "../utils/utils";
+import Navbar from "../components/Navbar";
 
 const AnimePage = () => {
   
   return (
-    <div className="w-full">
+    <div className="w-full main-padding">
+     
       {/* Search filter */}
       <SearchFilter />
 
