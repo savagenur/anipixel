@@ -4,7 +4,7 @@ import Navbar from "./components/Navbar";
 import "./App.css";
 import "./index.css";
 import { Route, Routes } from "react-router-dom";
-import AnimePage from "./pages/AnimePage";
+import SearchAnimePage from "./pages/SearchAnimePage";
 import Footer from "./components/Footer";
 import SocialPage from "./pages/SocialPage";
 import AnimeDetailPage from "./pages/AnimeDetailPage";
@@ -19,7 +19,7 @@ const App = () => {
       <ScrollToTop />
       <Navbar url={anime?.trailer.images.maximum_image_url}/>
       <Routes>
-        <Route path="/" element={<AnimePage />} />
+        <Route path="/search/anime" element={<SearchAnimePage />} />
         <Route path="/social" element={<SocialPage />} />
         <Route path="/anime/:id" element={<AnimeDetailPage />} />
         <Route path="/anime?search=:query"  element={<AnimeDetailPage />} />

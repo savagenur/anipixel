@@ -36,7 +36,7 @@ const Navbar = ({url}:{url:string|undefined}) => {
           <div className="flex justify-center gap-10">
             <NavLink
               className="text-sm sm:text-base hover:text-foreground"
-              to="/"
+              to="/search/anime"
             >
               Search
             </NavLink>

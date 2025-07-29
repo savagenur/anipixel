@@ -1,19 +1,32 @@
 import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
+import { useSearchParams } from "react-router-dom";
+import type { AnimeModel } from "../models/AnimeModel";
 
-export const useSearchAnime = (query: string) => {
-  return useQuery({
-    queryKey: ["search-anime", query],
-    queryFn: async () => {
-      const res = await axios.get("https://api.jikan.moe/v4/anime", {
-        params: {
-          q: query,
-          limit: 10,
-        },
-      });
-      return res.data.data;
-
+const fetchSearchAnime = async (
+  params: URLSearchParams
+): Promise<AnimeModel[]> => {
+  const queryObject: Record<string, string> = {};
+  params.forEach((value, key) => {
+    if (value.trim()) {
+      queryObject[key] = value;
+    }
+  });
+  const res = await axios.get(`https://api.jikan.moe/v4/anime`, {
+    params: {
+      ...queryObject,
+      limit: 12,
     },
-    enabled:!!query
+  });
+  return res.data.data;
+};
+
+export const useSearchAnime = () => {
+  const [searchParams] = useSearchParams();
+
+  return useQuery({
+    queryKey: ["search-anime", Object.fromEntries(searchParams.entries())],
+    queryFn: async () => fetchSearchAnime(searchParams),
+    // enabled: true,
   });
 };

@@ -5,4 +5,5 @@ export const TopAnimeFilter = {
   FAVORITE: "favorite",
 } as const;
 
-export type TopAnimeFilter = (typeof TopAnimeFilter)[keyof typeof TopAnimeFilter];
+export type TopAnimeFilter =
+  (typeof TopAnimeFilter)[keyof typeof TopAnimeFilter];
