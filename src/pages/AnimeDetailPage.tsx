@@ -1,23 +1,64 @@
+import { useQuery } from "@tanstack/react-query";
 import { ArrowDown, ChevronDown, Heart, HeartIcon } from "lucide-react";
-import React from "react";
+import React, { useEffect } from "react";
+import { useParams } from "react-router-dom";
+import { useAnime } from "../hooks/useAnime";
+import { useAnimeStore } from "../stores/animeStore";
+import { useCharacters } from "../hooks/useCharacters";
+import type { CharacterModel } from "../models/CharacterModel";
+import SkeletonCard from "../components/SkeletonCard";
+import { twx } from "../utils/utils";
+import type { Relation } from "../models/AnimeModel";
+import { useRelations } from "../hooks/useRelations";
 
 const AnimeDetailPage = () => {
+  const { id } = useParams();
+  const { setAnime } = useAnimeStore.getState();
+
+  const {
+    data: anime,
+    isLoading: isAnimeLoading,
+    error: animeError,
+  } = useAnime(id ?? "");
+
+  const {
+    data: characters,
+    isLoading: isCharactersLoading,
+    error: charactersError,
+  } = useCharacters(id ?? "");
+
+  const {
+    data: relations,
+    isLoading: isRelationsLoading,
+    error: relationsError,
+  } = useRelations(id ?? "");
+
+  useEffect(() => {
+    if (anime) {
+      setAnime(anime);
+    }
+    // return () => {
+    //   useAnimeStore.setState({ anime: null });
+    // };
+  }, [anime, setAnime]);
+
   return (
-    <div>
+    <div className="absolute pb-10">
       {/* Header section */}
       <div className="main-padding flex w-screen bg-background">
         {/* Image */}
         <div className="flex flex-col gap-4 pb-5">
           <img
-            className="min-w-[250px] aspect-[.7] rounded object-cover mt-[-15vh]"
-            src={
-              "https://s4.anilist.co/file/anilistcdn/media/anime/cover/large/bx178025-cWJKEsZynkil.jpg"
-            }
+            className={twx(
+              "min-w-[250px] w-[250px] aspect-[.7] rounded object-cover mt-[-15vh] bg-gray-600",
+              isAnimeLoading && "animate-pulse bg-gray-300"
+            )}
+            src={anime?.images.jpg?.large_image_url}
             alt=""
           />
           <div className="flex">
             <button className="w-full bg-primary text-foreground rounded-l py-2 px-3 items-center justify-center flex">
-              Add to List{" "}
+              Add to List
             </button>
             <button className="items-center bg-primary/80 text-foreground px-2 rounded-r justify-center flex cursor-pointer">
               <ChevronDown />
@@ -30,18 +71,11 @@ const AnimeDetailPage = () => {
         <div className="flex flex-col gap-4 justify-between">
           {/* Description */}
           <div className="flex flex-col gap-4 m-5">
-            <p className="text-lg text-textTitle">Gachiakuta</p>
+            <p className="text-lg text-textTitle">{anime?.title_english}</p>
             <p className="text-textColor4 line-clamp-8 text-sm">
-              A boy lives in a floating town, where the poor scrape by and the
-              rich live a sumptuous life, simply casting their garbage off the
-              side, into the abyss. When he’s falsely accused of murder, though,
-              his wrongful conviction leads to an unimaginable punishment—exile
-              off the edge, with the rest of the trash. Down on the surface, the
-              cast-off waste of humanity has bred vicious monsters, and to
-              travel the path to vengeance against those who cast him into Hell,
-              a boy will have to become a warrior…
+              {anime?.synopsis}
             </p>
-            <p className="text-textColor4">Source: Kodansha USA)</p>
+            <p className="text-textColor4">Source: {anime?.source}</p>
           </div>
           {/* Tabbar */}
           <div className="flex justify-evenly p-5">
@@ -60,31 +94,35 @@ const AnimeDetailPage = () => {
       {/* Main */}
       <div className="main-padding mt-8 flex gap-8">
         {/* Left side */}
-        <div className="flex flex-col bg-background p-3  rounded w-[15vw] gap-4">
-          {smallInfoTitle({ title: "Format", subtitle: "TV" })}
-          {smallInfoTitle({ title: "Format", subtitle: "TV" })}
-          {smallInfoTitle({ title: "Format", subtitle: "TV" })}
-          {smallInfoTitle({ title: "Format", subtitle: "TV" })}
-          {smallInfoTitle({ title: "Format", subtitle: "TV" })}
-          {smallInfoTitle({ title: "Format", subtitle: "TV" })}
-          {smallInfoTitle({ title: "Format", subtitle: "TV" })}
-          {smallInfoTitle({ title: "Format", subtitle: "TV" })}
+        <div className="flex flex-col bg-background p-3  rounded lg:w-[20vw] gap-4 max-lg:hidden ">
+          {smallInfoTitle({ title: "Score", subtitle: anime?.score ?? "N/A" })}
+          {smallInfoTitle({ title: "Rating", subtitle: anime?.rating ?? "" })}
+          {smallInfoTitle({
+            title: "Scored by",
+            subtitle: anime?.scored_by ?? "",
+          })}
+          {smallInfoTitle({ title: "Airing", subtitle: anime?.status ?? "" })}
+          {smallInfoTitle({ title: "Format", subtitle: anime?.type ?? "" })}
+          {smallInfoTitle({
+            title: "Episodes",
+            subtitle: anime?.episodes?.toString() ?? "",
+          })}
+          {smallInfoTitle({ title: "Season", subtitle: anime?.season ?? "" })}
         </div>
         {/* Right side */}
         <div className="w-full">
           <p className="font-semibold text-textTitle pb-4">Relations</p>
-          <div className="grid grid-cols-2 gap-x-8 gap-y-4">
-            {relationItem()}
-            {relationItem()}
-            {relationItem()}
+          <div className="grid sm:grid-cols-2 gap-x-8 gap-y-4">
+            {relations?.map((relation, index) => relationItem(relation, index))}
           </div>
 
           <p className="mt-5 font-semibold text-textTitle pb-4">Characters</p>
-          <div className="grid grid-cols-2 gap-x-8 gap-y-4">
-            {characterItem()}
-            {characterItem()}
-            {characterItem()}
-            {characterItem()}
+          <div className="grid lg:grid-cols-2 gap-x-8 gap-y-4">
+            {isCharactersLoading ? (
+              <SkeletonCard count={6} />
+            ) : (
+              characters?.map((character) => characterItem(character))
+            )}
           </div>
         </div>
       </div>
@@ -93,52 +131,66 @@ const AnimeDetailPage = () => {
 };
 
 export default AnimeDetailPage;
-function relationItem() {
+
+function relationItem(relation: Relation, index: number) {
   return (
-    <div className="flex bg-background overflow-hidden rounded h-[120px]">
-      <img
+    <div
+      key={index}
+      className="flex bg-background overflow-hidden rounded h-[120px]"
+    >
+      {/* <img
         className="aspect-[.7] object-contain"
         src={
-          "https://s4.anilist.co/file/anilistcdn/media/manga/cover/large/bx101583-VI1PT2QGGT8W.jpg"
+          relation.entry[0].url
         }
         alt=""
-      />
+      /> */}
       <div className="flex flex-col p-2 pl-3 justify-between">
         <div className="flex flex-col gap-2">
-          <p className="text-sm text-primary overflow-hidden">Source</p>
-          <p className="text-textTitle overflow-hidden">Source</p>
+          <p className="text-sm text-primary overflow-hidden">
+            {relation.relation}
+          </p>
+          <p className="text-textTitle overflow-hidden">
+            {relation.entry[0].name}
+          </p>
         </div>
-        <p className="text-textColor4 overflow-hidden">Source</p>
+        <p className="text-textColor4 overflow-hidden">
+          {relation.entry[0].type}
+        </p>
       </div>
     </div>
   );
 }
 
-function characterItem() {
+function characterItem(character: CharacterModel) {
+  const actor =
+    character.voice_actors.length !== 0 ? character.voice_actors[0] : null;
+
   return (
-    <div className="flex bg-background overflow-hidden rounded h-[90px]">
+    <div
+      key={character.character.mal_id}
+      className="flex bg-background overflow-hidden rounded h-[90px]"
+    >
       <img
         className="aspect-[.7] object-contain"
-        src={
-          "https://s4.anilist.co/file/anilistcdn/media/manga/cover/large/bx101583-VI1PT2QGGT8W.jpg"
-        }
+        src={character.character.images.jpg.image_url}
         alt=""
       />
       <div className="flex  w-full flex-col px-3 py-2 justify-between">
         <div className="flex justify-between gap-2">
-          <p className="text-textTitle overflow-hidden">Source</p>
-          <p className="text-textTitle overflow-hidden">Source</p>
+          <p className="text-textTitle overflow-hidden">
+            {character.character.name}
+          </p>
+          <p className="text-textTitle overflow-hidden">{actor?.person.name}</p>
         </div>
         <div className="flex justify-between gap-2">
-          <p className="text-textColor4 overflow-hidden">Source</p>
-          <p className="text-textColor4 overflow-hidden">Source</p>
+          <p className="text-textColor4 overflow-hidden">{character.role}</p>
+          <p className="text-textColor4 overflow-hidden">{actor?.language}</p>
         </div>
       </div>
       <img
         className="aspect-[.7] object-contain"
-        src={
-          "https://s4.anilist.co/file/anilistcdn/media/manga/cover/large/bx101583-VI1PT2QGGT8W.jpg"
-        }
+        src={actor?.person.images.jpg.image_url}
         alt=""
       />
     </div>
@@ -149,7 +201,7 @@ function smallInfoTitle({
   subtitle,
 }: {
   title: string;
-  subtitle: string;
+  subtitle: string | number;
 }) {
   return (
     <div>

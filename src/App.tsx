@@ -8,22 +8,22 @@ import AnimePage from "./pages/AnimePage";
 import Footer from "./components/Footer";
 import SocialPage from "./pages/SocialPage";
 import AnimeDetailPage from "./pages/AnimeDetailPage";
+import { useAnimeStore } from "./stores/animeStore";
+import ScrollToTop from "./components/ScrollToTop";
 
 const App = () => {
+  const anime = useAnimeStore((state) => state.anime);
+
   return (
     <div>
-      <Navbar
-        imageUrl={
-          "https://cdn.magicdecor.in/com/2023/10/20180551/Elemental-Magic-Anime-Wallpaper-for-Wall-M.jpg"
-        }
-      />
-      <div className="">
-        <Routes>
-          <Route path="/" element={<AnimePage />} />
-          <Route path="/social" element={<SocialPage />} />
-          <Route path="/anime/:id" element={<AnimeDetailPage />} />
-        </Routes>
-      </div>
+      <ScrollToTop />
+      <Navbar url={anime?.trailer.images.maximum_image_url}/>
+      <Routes>
+        <Route path="/" element={<AnimePage />} />
+        <Route path="/social" element={<SocialPage />} />
+        <Route path="/anime/:id" element={<AnimeDetailPage />} />
+        <Route path="/anime?search=:query"  element={<AnimeDetailPage />} />
+      </Routes>
       <Footer />
     </div>
   );

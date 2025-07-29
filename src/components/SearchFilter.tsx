@@ -4,6 +4,7 @@ import { FilterIcon, ChevronDown , Search, X } from 'lucide-react'
 import Button from './Button'
 
 const SearchFilter = () => {
+  
   return (
     <div className="text-foreground pt-10 hidden xl:flex pb-6 justify-between items-end w-full">
         <div className="flex gap-8 ">

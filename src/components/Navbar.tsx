@@ -4,28 +4,28 @@ import Button from "./Button";
 import clsx from "clsx";
 import reactLogo from "../assets/react.svg";
 import { twx } from "../utils/utils";
+import japanBg from "../assets/images/japan-bg.jpg";
 
-type NavbarProps = {
-  imageUrl?: string | null;
-};
 
-const Navbar: React.FC<NavbarProps> = ({ imageUrl = null }) => {
+
+const Navbar = ({url}:{url:string|undefined}) => {
   const { pathname } = useLocation();
-  const showImage = imageUrl && pathname.startsWith("/anime/");
+  const showImage =  pathname.startsWith("/anime/");
 
   return (
     <div
       className={twx(
         "w-full",
-        showImage && "bg-cover bg-center bg-no-repeat h-[45vh]"
+        showImage && "bg-cover bg-center bg-no-repeat h-[45vh] bg-darken"
       )}
-      style={showImage ? { backgroundImage: `url(${imageUrl})` } : undefined}
+      style={showImage ? { backgroundImage: `url(${url})`,
+     } : undefined}
     >
       <div
         className={twx(
           "main-padding h-20 text-textColor2 w-full items-center gap-4 lg:flex hidden",
           showImage
-            ? "bg-background/70 hover:bg-background transition-all duration-500 text-foreground hover:text-textColor2"
+            ? "bg-background/70 hover:bg-background transition-all duration-500 text-foreground hover:text-textColor2 absolute"
             : "bg-background"
         )}
       >

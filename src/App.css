@@ -56,7 +56,14 @@
 body {
   background-color: var(--color-page);
 }
-
+.bg-darken::before {
+  content: "";
+  height: 45vh;
+  position: absolute;
+  inset: 0;
+  background-color: rgba(0, 0, 0, 0.4); /* adjust darkness here */
+  z-index: 0;
+}
 /* 
 :root {
   font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;

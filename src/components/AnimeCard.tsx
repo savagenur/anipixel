@@ -1,19 +1,20 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
+import type { AnimeModel } from "../models/AnimeModel";
 
-const AnimeCard = () => {
+const AnimeCard = ({anime}:{anime:AnimeModel}) => {
   const navigate = useNavigate();
   return (
-    <div onClick={() => navigate("/anime/asd")} className="group cursor-pointer">
+    <div onClick={() => navigate(`/anime/${anime.mal_id}`)} className="group cursor-pointer">
       <img
         className="aspect-[.7] rounded object-cover"
         src={
-          "https://www.memrise.com/hubfs/SEO%20-%20Japanese/Images/Blog-Feature-Anime-Image-230621-v01.jpg"
+          anime.images.jpg?.image_url
         }
         alt=""
       />
       <p className="text-textColor4 pt-2 group-hover:text-primary">
-        One punch man 3
+        {anime.title}
       </p>
     </div>
   );
