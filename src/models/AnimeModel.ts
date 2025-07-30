@@ -99,7 +99,7 @@ export interface Studio {
 export interface Genre {
   mal_id: number;
   type: string;
-  name: string;
+  name: number;
   url: string;
 }
 

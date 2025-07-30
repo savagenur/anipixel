@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { NavLink, useLocation } from "react-router-dom";
 import Button from "./Button";
 import clsx from "clsx";
@@ -6,11 +6,9 @@ import reactLogo from "../assets/react.svg";
 import { twx } from "../utils/utils";
 import japanBg from "../assets/images/japan-bg.jpg";
 
-
-
-const Navbar = ({url}:{url:string|undefined}) => {
+const Navbar = ({ url = japanBg }: { url: string | undefined | null }) => {
   const { pathname } = useLocation();
-  const showImage =  pathname.startsWith("/anime/");
+  const showImage = pathname.startsWith("/anime/");
 
   return (
     <div
@@ -18,8 +16,9 @@ const Navbar = ({url}:{url:string|undefined}) => {
         "w-full",
         showImage && "bg-cover bg-center bg-no-repeat h-[45vh] bg-darken"
       )}
-      style={showImage ? { backgroundImage: `url(${url})`,
-     } : undefined}
+      style={
+        showImage ? { backgroundImage: `url(${url ?? japanBg})` } : undefined
+      }
     >
       <div
         className={twx(
@@ -29,6 +28,7 @@ const Navbar = ({url}:{url:string|undefined}) => {
             : "bg-background"
         )}
       >
+        
         <img src={reactLogo} alt="Logo" className="h-12 w-12" />
 
         <div className="flex justify-center w-full items-center">

@@ -3,14 +3,14 @@ export const SearchFilterEnum = {
   GENRES: "genres",
   YEAR: "start_date",
   STATUS: "status",
-  FORMAT: "type",
+  TYPE: "type",
 };
 export const searchFilterEnumValues = () => [
   SearchFilterEnum.SEARCH,
   SearchFilterEnum.GENRES,
   SearchFilterEnum.YEAR,
   SearchFilterEnum.STATUS,
-  SearchFilterEnum.FORMAT,
+  SearchFilterEnum.TYPE,
 ];
 export type SearchFilterEnum =
   (typeof SearchFilterEnum)[keyof typeof SearchFilterEnum];

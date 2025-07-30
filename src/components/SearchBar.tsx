@@ -4,6 +4,7 @@ import SearchFilterTile from "./SearchFilterTile";
 import { useSearchParams } from "react-router-dom";
 import type { ChangeEvent } from "react";
 import { SearchFilterEnum } from "../core/enums/SearchFilterEnum";
+import { useGenres } from "../hooks/useGenres";
 
 const SearchBar = () => {
   const [searchParams, setSearchParams] = useSearchParams();
@@ -15,13 +16,14 @@ const SearchBar = () => {
   };
 
   return (
-    <div className="text-foreground pt-10 hidden xl:flex pb-6 justify-between items-end w-full">
+    <div className="text-foreground pt-10 hidden lg:flex pb-6 justify-between items-end w-full">
       <div className="flex gap-8 ">
         <SearchFilterTile
           searchFilterEnum={SearchFilterEnum.SEARCH}
           title={"Search"}
           Prefix={Search}
-          Suffix={X}
+          type="input"
+
         />
         <SearchFilterTile
           searchFilterEnum={SearchFilterEnum.GENRES}
@@ -40,9 +42,12 @@ const SearchBar = () => {
           title={"Status"}
           placeholder={"Any"}
           Suffix={ChevronDown}
+          type="dropdown"
+          // fetchOptions={useGenres}
+          
         />
         <SearchFilterTile
-          searchFilterEnum={SearchFilterEnum.FORMAT}
+          searchFilterEnum={SearchFilterEnum.TYPE}
           title={"Format"}
           placeholder={"Any"}
           Suffix={ChevronDown}

@@ -16,7 +16,8 @@ const SearchAnimePage = () => {
   const query = searchParams.get("q") ?? "";
   const searchAnime = useSearchAnime();
 
-  const showSearchOnly = query.length > 2;
+  const showSearchOnly =
+    query.length > 2 || Array.from(searchParams).length > 0;
 
   return (
     <div className="w-full main-padding">

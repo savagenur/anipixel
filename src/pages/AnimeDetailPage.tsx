@@ -37,9 +37,9 @@ const AnimeDetailPage = () => {
     if (anime) {
       setAnime(anime);
     }
-    // return () => {
-    //   useAnimeStore.setState({ anime: null });
-    // };
+    return () => {
+      useAnimeStore.setState({ anime: null });
+    };
   }, [anime, setAnime]);
 
   return (
