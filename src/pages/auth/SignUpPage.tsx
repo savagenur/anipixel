@@ -8,22 +8,22 @@ const SignUpPage = () => {
       <div className="flex flex-col items-center gap-4">
         <input
           type="email"
-          className="text-primary font-semibold placeholder:text-gray-600 placeholder:font-normal  bg-transparent  border p-3 rounded-xl border-textColor4"
+          className="text-primary font-semibold placeholder:text-gray-600 placeholder:font-normal  bg-transparent  border py-2 px-4 rounded-xl border-textColor4"
           placeholder="Email"
         />
         <input
           type="text"
-          className="text-primary font-semibold placeholder:text-gray-600 placeholder:font-normal  bg-transparent  border p-3 rounded-xl border-textColor4"
+          className="text-primary font-semibold placeholder:text-gray-600 placeholder:font-normal  bg-transparent  border py-2 px-4 rounded-xl border-textColor4"
           placeholder="Username"
         />
         <input
           type="password"
-          className="text-primary font-semibold placeholder:text-gray-600 placeholder:font-normal  bg-transparent border p-3 rounded-xl border-textColor4"
+          className="text-primary font-semibold placeholder:text-gray-600 placeholder:font-normal  bg-transparent border py-2 px-4 rounded-xl border-textColor4"
           placeholder="Password"
         />
         <input
           type="password"
-          className="text-primary font-semibold placeholder:text-gray-600 placeholder:font-normal  bg-transparent border p-3 rounded-xl border-textColor4"
+          className="text-primary font-semibold placeholder:text-gray-600 placeholder:font-normal  bg-transparent border py-2 px-4 rounded-xl border-textColor4"
           placeholder="Confirm Password"
         />
         <Button children={"Sign up"} />
