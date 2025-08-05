@@ -10,6 +10,8 @@ import SocialPage from "./pages/SocialPage";
 import AnimeDetailPage from "./pages/AnimeDetailPage";
 import { useAnimeStore } from "./stores/animeStore";
 import ScrollToTop from "./components/ScrollToTop";
+import SignInPage from "./pages/auth/SignInPage";
+import SignUpPage from "./pages/auth/SignUpPage";
 
 const App = () => {
   const anime = useAnimeStore((state) => state.anime);
@@ -19,6 +21,8 @@ const App = () => {
       <ScrollToTop />
       <Navbar url={anime?.trailer.images.maximum_image_url}/>
       <Routes>
+        <Route path="/sign-in" element={<SignInPage />} />
+        <Route path="/sign-up" element={<SignUpPage />} />
         <Route path="/search/anime" element={<SearchAnimePage />} />
         <Route path="/social" element={<SocialPage />} />
         <Route path="/anime/:id" element={<AnimeDetailPage />} />

@@ -48,13 +48,15 @@ const AnimeCard = ({ anime }: { anime: AnimeModel }) => {
         <p className="text-xs text-gray-500 mt-1 line-clamp-3">
           {anime.synopsis}
         </p>
-       <div className="flex gap-2 pt-2 font-semibold">
-         {
-          anime.genres.slice(0,3).map((genre, index) => {
-            return <div className="rounded flex text-center bg-yellow-400 items-center justify-center text-black text-xs py-1 px-2">{genre.name}</div>
-          })
-        }
-       </div>
+        <div className="flex gap-2 pt-2 font-semibold">
+          {anime.genres.slice(0, 3).map((genre, index) => {
+            return (
+              <div className="rounded flex text-center bg-yellow-400 items-center justify-center text-black text-xs py-1 px-2">
+                {genre.name}
+              </div>
+            );
+          })}
+        </div>
         <p className={"text-xs mt-2 text-textTitle  font-semibold"}>
           Score:{" "}
           <span

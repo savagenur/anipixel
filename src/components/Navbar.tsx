@@ -1,14 +1,15 @@
 import React, { useEffect } from "react";
-import { NavLink, useLocation } from "react-router-dom";
+import { NavLink, useLocation, useNavigate } from "react-router-dom";
 import Button from "./Button";
 import clsx from "clsx";
 import reactLogo from "../assets/react.svg";
 import { twx } from "../utils/utils";
 import japanBg from "../assets/images/japan-bg.jpg";
 
-const Navbar = ({ url = japanBg }: { url: string | undefined | null }) => {
+const Navbar = ({ url = japanBg }: { url?: string | undefined | null }) => {
   const { pathname } = useLocation();
   const showImage = pathname.startsWith("/anime/");
+  const navigate = useNavigate();
 
   return (
     <div
@@ -58,11 +59,11 @@ const Navbar = ({ url = japanBg }: { url: string | undefined | null }) => {
           <div className="pl-20 flex gap-5 items-center">
             <NavLink
               className="text-sm sm:text-base hover:text-white"
-              to="/forum"
+              to="/sign-in"
             >
               Login
             </NavLink>
-            <Button>Sign up</Button>
+            <Button onClick={() => navigate("/sign-up")}>Sign up</Button>
           </div>
         </div>
       </div>
