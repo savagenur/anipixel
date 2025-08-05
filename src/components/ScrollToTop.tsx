@@ -8,7 +8,6 @@ const ScrollToTop = () => {
   useEffect(() => {
     // Only scroll to top on PUSH (i.e. new navigation, not back/forward)
     if (navigationType === "PUSH") {
-      console.log("Yeeeeees");
       
       window.scrollTo({ top: 0, left: 0, behavior: "instant" });
     }
