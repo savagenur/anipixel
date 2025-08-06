@@ -43,15 +43,15 @@ const Navbar = ({ url = japanBg }: { url?: string | undefined | null }) => {
             </NavLink>
             <NavLink
               className="text-sm sm:text-base hover:text-foreground"
-              to="/social"
+              to="/schedule"
             >
-              Social
+              Schedule
             </NavLink>
             <NavLink
               className="text-sm sm:text-base hover:text-foreground"
-              to="/forum"
+              to="/recommendation"
             >
-              Forum
+              Recommendations
             </NavLink>
           </div>
 

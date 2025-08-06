@@ -9,6 +9,7 @@
   --breakpoint-xs: 30rem;
   --color-background: hsl(213, 41%, 14%);
   --color-foreground: hsl(0 0% 98%);
+  --color-hoverBG: hsl(213, 41%, 20%);
   --color-primary: hsl(220 90% 70%);
   --color-secondary: hsl(270 60% 75%);
   --color-muted: hsl(222 15% 18%);

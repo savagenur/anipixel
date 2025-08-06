@@ -12,7 +12,7 @@ type AnimeStore = {
 export const useAnimeStore = create<AnimeStore>((set, get) => ({
   anime: null,
   setAnime: (anime) => {
-    if (get().anime?.mal_id === anime.mal_id) return; // 👈 предотвратит бесконечный цикл
+    if (get().anime?.mal_id === anime.mal_id) return; 
     set({ anime });
   },
 }));

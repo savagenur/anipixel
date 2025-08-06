@@ -1,4 +1,7 @@
 import type { Option } from "../models/Option";
+import japanBg from "../assets/images/japan-bg.jpg";
+
+export const BG_JAPAN = japanBg;
 
 const currentYear = new Date().getFullYear();
 const maxYear = currentYear + 2;
@@ -10,7 +13,6 @@ export const yearOptions: Option[] = Array.from(
     return { mal_id: `${year}-01-01`, name: year.toString() };
   }
 );
-
 
 export const statusOptions: Option[] = [
   {
