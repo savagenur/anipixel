@@ -50,6 +50,27 @@
   }
 }
 
+.scrollbar-hide::-webkit-scrollbar {
+  display: none;
+}
+/* Apply to class `.scrollbar-custom` */
+.scrollbar-custom::-webkit-scrollbar {
+  height: 10px; /* Smaller height for horizontal scroll */
+  width: 10px;
+}
+
+.scrollbar-custom::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.scrollbar-custom::-webkit-scrollbar-thumb {
+  background-color: rgba(100, 100, 100, 0.4); /* Gray with transparency */
+  border-radius: 4px;
+}
+
+.scrollbar-custom::-webkit-scrollbar-thumb:hover {
+  background-color: rgba(100, 100, 100, 0.6);
+}
 @utility main-padding {
   @apply px-4 sm:px-[2vw] md:px-[3vw] lg:px-[8vw] xl:px-[10vw];
 }

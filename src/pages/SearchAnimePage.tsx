@@ -4,14 +4,13 @@ import MainTitle from "../components/MainTitle";
 import SearchBar from "../components/SearchBar";
 import SkeletonCard from "../components/SkeletonCard";
 import { TopAnimeFilter } from "../core/enums/TopAnimeFilter";
-import { useTopAnime } from "../hooks/useTopAnime";
 import { useSearchAnime } from "../hooks/useSearchAnime";
-
+import { useTopAnime } from "../hooks/useTopAnime";
 const SearchAnimePage = () => {
-  const airingQuery = useTopAnime(TopAnimeFilter.AIRING);
-  const upcomingQuery = useTopAnime(TopAnimeFilter.UPCOMING);
-  const popularQuery = useTopAnime(TopAnimeFilter.BY_POPULARITY);
-  const favoriteQuery = useTopAnime(TopAnimeFilter.FAVORITE);
+  const airingQuery = useTopAnime(TopAnimeFilter.AIRING, 6);
+  const upcomingQuery = useTopAnime(TopAnimeFilter.UPCOMING, 6);
+  const popularQuery = useTopAnime(TopAnimeFilter.BY_POPULARITY, 6);
+  const favoriteQuery = useTopAnime(TopAnimeFilter.FAVORITE, 6);
   const [searchParams] = useSearchParams();
   const query = searchParams.get("q") ?? "";
   const searchAnime = useSearchAnime();
@@ -41,11 +40,11 @@ const animeSection = (
   { data: animeList, isLoading, error }: ReturnType<typeof useTopAnime>
 ) => (
   <>
-    <div className="pt-10">
+    <div className="">
       <MainTitle title={title} />
     </div>
     {
-      <div className="grid grid-cols-2 xs:grid-cols-3 sm:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-8 mt-5">
+      <div className="grid grid-cols-2 xs:grid-cols-3 sm:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-8 mt-5 pb-10">
         {isLoading ? (
           <SkeletonCard count={6} />
         ) : (

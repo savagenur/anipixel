@@ -1,12 +1,15 @@
 import React from "react";
 import { useRecommendations } from "../../hooks/recommendation/useRecommendation";
 import { convertToFullDate } from "../../utils/utils";
+import SkeletonCard from "../../components/SkeletonCard";
 
 const RecommendationPage = () => {
   const { data: recommendations, isLoading, error } = useRecommendations(1);
   return (
     <div className="main-padding gap-5 flex flex-col pt-5">
-      {recommendations?.map((recommendation) => (
+      {isLoading?<div className="grid grid-cols-2 xs:grid-cols-3 sm:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-8 mt-5 pb-10">
+          <SkeletonCard count={6} />
+        </div>:recommendations?.map((recommendation) => (
         <div className="w-full max-w-3xl mx-auto p-4 space-y-4 rounded-lg border bg-background shadow-md">
           {/* User Info */}
           <div className="flex justify-between items-center text-sm text-muted-foreground">
@@ -29,7 +32,7 @@ const RecommendationPage = () => {
           </div>
 
           {/* Anime Entries */}
-          <div className="grid gap-4 sm:grid-cols-2 mx-10">
+          <div className="grid gap-4 grid-cols-2 sm:mx-20 md:mx-30">
             {recommendation.entry.map((anime) => (
               <a
                 key={anime.mal_id}

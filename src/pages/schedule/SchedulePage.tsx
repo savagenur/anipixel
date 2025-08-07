@@ -3,6 +3,7 @@ import Navbar from "../../components/Navbar";
 import { BG_JAPAN } from "../../utils/constants";
 import { useSchedules } from "../../hooks/schedule/useSchedules";
 import { Heart, Users2 } from "lucide-react";
+import SkeletonCard from "../../components/SkeletonCard";
 
 const SchedulePage = () => {
   const schedulesQuery = useSchedules(1);
@@ -14,7 +15,9 @@ const SchedulePage = () => {
       {/* Left side */}
       <div className="flex flex-col gap-5 w-full">
         {/* Card */}
-        {schedules?.map((anime) => (
+        {isLoading?<div className="grid grid-cols-2 xs:grid-cols-3 sm:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-8 mt-5 pb-10">
+          <SkeletonCard count={6} />
+        </div>:schedules?.map((anime) => (
           <div key={anime.mal_id} className="flex rounded-lg bg-background gap-2 overflow-hidden">
             <img
               className="h-40 aspect-[.75] object-cover"
