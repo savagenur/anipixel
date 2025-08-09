@@ -1,7 +1,7 @@
 import { debounce } from "lodash";
 import { BadgeCheckIcon, X, type LucideIcon } from "lucide-react";
-import React, { useEffect, useMemo, useRef, useState } from "react";
-import { useSearchParams } from "react-router-dom";
+import React, { useCallback, useEffect, useMemo, useRef, useState } from "react";
+import { useLocation, useNavigate, useSearchParams } from "react-router-dom";
 import { SearchFilterEnum } from "../core/enums/SearchFilterEnum";
 import { useGenres } from "../hooks/useGenres";
 import type { Option } from "../models/Option";
@@ -29,6 +29,8 @@ const SearchFilterTile = ({
   className = "",
   showTitle = true,
 }: FilterTileProps) => {
+  const location = useLocation();
+  const navigate = useNavigate();
   const queryKey = searchFilterEnum;
   const [searchParams, setSearchParams] = useSearchParams();
   const [showDropdown, setShowDropdown] = useState(false);
@@ -77,19 +79,21 @@ const SearchFilterTile = ({
     }
   }, [searchParams, queryKey, type, genresOptions, options]);
   // Debounced URL update
-  const debouncedSetParams = useMemo(
-    () =>
-      debounce((value: string) => {
-        const newParams = new URLSearchParams(searchParams);
-        if (value === "") {
-          newParams.delete(queryKey);
-        } else {
-          newParams.set(queryKey, value);
-        }
-        setSearchParams(newParams);
-      }, 1000),
-    [searchParams, setSearchParams, queryKey]
-  );
+  const debouncedNavigateAndSetParams = useMemo(() => 
+  debounce((value: string) => {
+    const params = new URLSearchParams(location.search);
+    if (value === "") {
+      params.delete(queryKey);
+    } else {
+      params.set(queryKey, value);
+    }
+
+    const path = location.pathname === "/search/anime" ? location.pathname : "/search/anime";
+
+    navigate(`${path}?${params.toString()}`);
+  }, 1000),
+  [location.pathname, location.search, navigate, queryKey]
+);
 
   const containerRef = useRef<HTMLDivElement>(null);
 
@@ -111,16 +115,17 @@ const SearchFilterTile = ({
   // Cancel on unmount
   useEffect(() => {
     return () => {
-      debouncedSetParams.cancel();
+        debouncedNavigateAndSetParams.cancel();
     };
-  }, [debouncedSetParams]);
+  }, [  debouncedNavigateAndSetParams]);
 
-  // When input changes, update local state + trigger debounced URL update
+  
+
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const value = e.target.value;
-    setInputValue(value); // immediate UI feedback
-    debouncedSetParams(value.trim()); // delay search param update
-  };
+  const value = e.target.value.trim();
+  setInputValue(value); // immediate UI feedback
+  debouncedNavigateAndSetParams(value);
+};
 
   const handleClick = async () => {
     if (type === "dropdown") {
@@ -149,7 +154,7 @@ const SearchFilterTile = ({
   const handleSelect = (mal_id: string, name: string) => {
     setInputValue(name);
     setShowDropdown(false);
-    debouncedSetParams(mal_id);
+      debouncedNavigateAndSetParams(mal_id);
   };
   return (
     <div className="flex flex-col gap-2 relative text-textTitle ">

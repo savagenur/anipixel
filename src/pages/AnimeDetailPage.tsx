@@ -1,7 +1,7 @@
 import { useQuery } from "@tanstack/react-query";
 import { ArrowDown, ChevronDown, Heart, HeartIcon } from "lucide-react";
 import React, { useEffect } from "react";
-import { useParams } from "react-router-dom";
+import { data, useNavigate, useParams } from "react-router-dom";
 import { useAnime } from "../hooks/useAnime";
 import { useAnimeStore } from "../stores/animeStore";
 import { useCharacters } from "../hooks/useCharacters";
@@ -53,7 +53,7 @@ const AnimeDetailPage = () => {
               "min-w-[250px] w-[250px] aspect-[.7] rounded object-cover mt-[-15vh] bg-gray-600",
               isAnimeLoading && "animate-pulse bg-gray-300"
             )}
-            src={anime?.images.jpg?.large_image_url}
+            src={anime?.images.jpg?.large_image_url ?? undefined}
             alt=""
           />
           <div className="flex">
@@ -113,7 +113,7 @@ const AnimeDetailPage = () => {
         <div className="w-full">
           <p className="font-semibold text-textTitle pb-4">Relations</p>
           <div className="grid sm:grid-cols-2 gap-x-8 gap-y-4">
-            {relations?.map((relation, index) => relationItem(relation, index))}
+            {relations?.map((relation, index) => <RelationItem relation={relation} index={index} />)}
           </div>
 
           <p className="mt-5 font-semibold text-textTitle pb-4">Characters</p>
@@ -132,11 +132,14 @@ const AnimeDetailPage = () => {
 
 export default AnimeDetailPage;
 
-function relationItem(relation: Relation, index: number) {
+const RelationItem = ({relation, index}:{relation: Relation, index: number}) => {
+  
+  const navigate = useNavigate();
   return (
     <div
       key={index}
       className="flex bg-background overflow-hidden rounded h-[120px]"
+      onClick={() => navigate(`/anime/${relation.entry[0].mal_id}`)}
     >
       {/* <img
         className="aspect-[.7] object-contain"
@@ -160,7 +163,7 @@ function relationItem(relation: Relation, index: number) {
       </div>
     </div>
   );
-}
+};
 
 function characterItem(character: CharacterModel) {
   const actor =

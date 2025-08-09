@@ -13,6 +13,7 @@ import ScrollToTop from "./components/ScrollToTop";
 import SignInPage from "./pages/auth/SignInPage";
 import SignUpPage from "./pages/auth/SignUpPage";
 import RecommendationPage from "./pages/recommendation/RecommendationPage";
+import TopAnimePage from "./pages/topAnime/TopAnimePage";
 
 const App = () => {
   const anime = useAnimeStore((state) => state.anime);
@@ -27,6 +28,7 @@ const App = () => {
         <Route path="/search/anime" element={<SearchAnimePage />} />
         <Route path="/schedule" element={<SchedulePage />} />
         <Route path="/recommendation" element={<RecommendationPage />} />
+        <Route path="/top-anime/:filter/page/:page" element={<TopAnimePage />} />
         <Route path="/anime/:id" element={<AnimeDetailPage />} />
         <Route path="/anime?search=:query"  element={<AnimeDetailPage />} />
       </Routes>

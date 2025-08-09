@@ -30,7 +30,7 @@ const Navbar = ({ url = japanBg }: { url?: string | undefined | null }) => {
             : "bg-background"
         )}
       >
-        <img src={reactLogo} alt="Logo" className="h-12 w-12" />
+        <img onClick={() => navigate('/search/anime')} src={reactLogo} alt="Logo" className="h-12 w-12 cursor-pointer" />
 
         <div className="flex justify-center w-full items-center">
           {/* Left links */}

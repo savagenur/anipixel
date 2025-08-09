@@ -2,9 +2,11 @@ import React from "react";
 import { useRecommendations } from "../../hooks/recommendation/useRecommendation";
 import { convertToFullDate } from "../../utils/utils";
 import SkeletonCard from "../../components/SkeletonCard";
+import { useNavigate } from "react-router-dom";
 
 const RecommendationPage = () => {
   const { data: recommendations, isLoading, error } = useRecommendations(1);
+  const navigate = useNavigate();
   return (
     <div className="main-padding gap-5 flex flex-col pt-5">
       {isLoading?<div className="grid grid-cols-2 xs:grid-cols-3 sm:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-8 mt-5 pb-10">
@@ -36,11 +38,11 @@ const RecommendationPage = () => {
             {recommendation.entry.map((anime) => (
               <a
                 key={anime.mal_id}
-                href={anime.url}
+                // href={anime.url}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="flex flex-col  gap-3 rounded-lg border border-gray-600 p-3 hover:shadow transition hover:bg-hoverBG"
-              >
+              onClick={() => navigate(`/anime/${anime.mal_id}`)}>
                 <img
                   src={anime.images.jpg.large_image_url}
                   alt={anime.title}

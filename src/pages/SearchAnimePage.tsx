@@ -7,10 +7,10 @@ import { TopAnimeFilter } from "../core/enums/TopAnimeFilter";
 import { useSearchAnime } from "../hooks/useSearchAnime";
 import { useTopAnime } from "../hooks/useTopAnime";
 const SearchAnimePage = () => {
-  const airingQuery = useTopAnime(TopAnimeFilter.AIRING, 6);
-  const upcomingQuery = useTopAnime(TopAnimeFilter.UPCOMING, 6);
-  const popularQuery = useTopAnime(TopAnimeFilter.BY_POPULARITY, 6);
-  const favoriteQuery = useTopAnime(TopAnimeFilter.FAVORITE, 6);
+  const airingQuery = useTopAnime(TopAnimeFilter.AIRING, 6, null);
+  const upcomingQuery = useTopAnime(TopAnimeFilter.UPCOMING, 6, null);
+  const popularQuery = useTopAnime(TopAnimeFilter.BY_POPULARITY, 6, null);
+  const favoriteQuery = useTopAnime(TopAnimeFilter.FAVORITE, 6, null);
   const [searchParams] = useSearchParams();
   const query = searchParams.get("q") ?? "";
   const searchAnime = useSearchAnime();
@@ -22,13 +22,13 @@ const SearchAnimePage = () => {
     <div className="w-full main-padding">
       <SearchBar />
       {showSearchOnly ? (
-        animeSection("Search Results", searchAnime)
+        animeSection("Search Results", null, searchAnime)
       ) : (
         <>
-          {animeSection("UPCOMING NOW", upcomingQuery)}
-          {animeSection("AIRING", airingQuery)}
-          {animeSection("POPULAR", popularQuery)}
-          {animeSection("FAVORITE", favoriteQuery)}
+          {animeSection("UPCOMING NOW", TopAnimeFilter.UPCOMING, upcomingQuery)}
+          {animeSection("AIRING", TopAnimeFilter.AIRING, airingQuery)}
+          {animeSection("POPULAR", TopAnimeFilter.BY_POPULARITY, popularQuery)}
+          {animeSection("FAVORITE", TopAnimeFilter.FAVORITE, favoriteQuery)}
         </>
       )}
     </div>
@@ -37,23 +37,33 @@ const SearchAnimePage = () => {
 
 const animeSection = (
   title: string,
-  { data: animeList, isLoading, error }: ReturnType<typeof useTopAnime>
+  filter: TopAnimeFilter | null,
+  {
+    data: paginatedAnimeResponse,
+    isLoading,
+    error,
+  }: ReturnType<typeof useSearchAnime>
 ) => (
   <>
     <div className="">
-      <MainTitle title={title} />
+      <MainTitle title={title} filter={filter} />
     </div>
     {
       <div className="grid grid-cols-2 xs:grid-cols-3 sm:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-8 mt-5 pb-10">
         {isLoading ? (
           <SkeletonCard count={6} />
         ) : (
-          animeList?.map((anime, index) => (
+          paginatedAnimeResponse?.data?.map((anime, index) => (
             <AnimeCard key={`${anime.mal_id}${index}`} anime={anime} />
           ))
         )}
       </div>
     }
+    {!isLoading && paginatedAnimeResponse?.data?.length === 0 && (
+      <div className="text-5xl text-textTitle font-bold pt-5 pb-[60vh] text-center">
+        No Results
+      </div>
+    )}
   </>
 );
 

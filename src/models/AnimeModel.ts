@@ -1,3 +1,21 @@
+export interface PaginatedAnimeResponse {
+  pagination: Pagination;
+  data: AnimeModel[];
+}
+
+export interface Pagination {
+  last_visible_page: number;
+  has_next_page: boolean;
+  current_page: number;
+  items: PaginationItems;
+}
+
+export interface PaginationItems {
+  count: number;
+  total: number;
+  per_page: number;
+}
+
 export interface AnimeModel {
   mal_id: number;
   url: string;
