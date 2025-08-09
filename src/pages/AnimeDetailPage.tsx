@@ -45,19 +45,19 @@ const AnimeDetailPage = () => {
   return (
     <div className="absolute pb-10">
       {/* Header section */}
-      <div className="main-padding flex w-screen bg-background">
+      <div className="main-padding flex w-screen bg-background sm:flex-row flex-col items-center">
         {/* Image */}
         <div className="flex flex-col gap-4 pb-5">
           <img
             className={twx(
-              "min-w-[250px] w-[250px] aspect-[.7] rounded object-cover mt-[-15vh] bg-gray-600",
+              " w-[250px] aspect-[.7] rounded object-cover mt-[-15vh] bg-gray-600",
               isAnimeLoading && "animate-pulse bg-gray-300"
             )}
             src={anime?.images.jpg?.large_image_url ?? undefined}
             alt=""
           />
-          <div className="flex">
-            <button className="w-full bg-primary text-foreground rounded-l py-2 px-3 items-center justify-center flex">
+          <div className="flex  ">
+            <button className="w-full bg-primary text-foreground rounded-l py-2 sm:py-2 px-3 items-center justify-center flex sm:text-base text-xs text-nowrap">
               Add to List
             </button>
             <button className="items-center bg-primary/80 text-foreground px-2 rounded-r justify-center flex cursor-pointer">
@@ -113,7 +113,9 @@ const AnimeDetailPage = () => {
         <div className="w-full">
           <p className="font-semibold text-textTitle pb-4">Relations</p>
           <div className="grid sm:grid-cols-2 gap-x-8 gap-y-4">
-            {relations?.map((relation, index) => <RelationItem relation={relation} index={index} />)}
+            {relations?.map((relation, index) => (
+              <RelationItem relation={relation} index={index} />
+            ))}
           </div>
 
           <p className="mt-5 font-semibold text-textTitle pb-4">Characters</p>
@@ -132,8 +134,13 @@ const AnimeDetailPage = () => {
 
 export default AnimeDetailPage;
 
-const RelationItem = ({relation, index}:{relation: Relation, index: number}) => {
-  
+const RelationItem = ({
+  relation,
+  index,
+}: {
+  relation: Relation;
+  index: number;
+}) => {
   const navigate = useNavigate();
   return (
     <div
