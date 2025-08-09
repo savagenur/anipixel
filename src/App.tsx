@@ -3,7 +3,7 @@ import ThemeToggle from "./components/ThemeToggle";
 import Navbar from "./components/Navbar";
 import "./App.css";
 import "./index.css";
-import { Route, Routes } from "react-router-dom";
+import { Navigate, Route, Routes } from "react-router-dom";
 import SearchAnimePage from "./pages/SearchAnimePage";
 import Footer from "./components/Footer";
 import SchedulePage from "./pages/schedule/SchedulePage";
@@ -23,6 +23,7 @@ const App = () => {
       <ScrollToTop />
       <Navbar url={anime?.trailer.images.maximum_image_url}/>
       <Routes>
+        <Route path="/" element={<Navigate to="/search/anime" replace />} />
         <Route path="/sign-in" element={<SignInPage />} />
         <Route path="/sign-up" element={<SignUpPage />} />
         <Route path="/search/anime" element={<SearchAnimePage />} />
